@@ -177,20 +177,3 @@ A Streamlit screen to send an incident to the n8n webhook and read the result: `
 ## Evidence rules
 
 Every number in the report and slides must come from a run we logged. Results from the MOCK Gemini or the replay webhook are labelled MOCK and say nothing about model quality. A prompt version is never edited after it has been tested: write the next version and a CHANGELOG entry with the failing input. For a change that is meant to improve a measure, the pass rule and a held-out set are written before the run.
-
-## Team
-
-| Member | Main role |
-|---|---|
-| _Name_ | Architecture and coordination |
-| _Name_ | RAG (corpus, chunking, retrieval evaluation) |
-| _Name_ | Multi-agent system and n8n integration |
-| _Name_ | Prompt engineering |
-| Jihen Troudi | _role_ |
-| _Name_ | Multimodality (vision) |
-
-Everyone must be able to explain every part of the system.
-
-## Credits
-
-Originally developed in [aminbaccari/DisasterDL](https://github.com/aminbaccari/DisasterDL) (branch `n8n-workflow`). The commit history is kept here. Test images are CC BY with attribution in `vision/test_images/SOURCES.md`, and corpus sources are listed in `rag/corpus/SOURCES.md`.
