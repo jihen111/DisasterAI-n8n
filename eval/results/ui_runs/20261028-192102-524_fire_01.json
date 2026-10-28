@@ -1,0 +1,250 @@
+{
+ "saved_at": "20261028-192102-524",
+ "sample_id": "fire_01",
+ "url": "http://localhost:5678/webhook/incident",
+ "profile": "Team n8n, port 5678",
+ "mock": false,
+ "language": "en",
+ "text": "Smoke is rising from the hills behind the village and flames are visible near the first houses. A strong wind is blowing toward the village.",
+ "image_file": "20261028-192102-524_fire_01.jpg",
+ "kind": "ok",
+ "seconds": 30.1,
+ "http_status": 200,
+ "message": "",
+ "response": {
+  "status": "ok",
+  "incident_type": "forest_fire",
+  "severity": "high",
+  "report_markdown": "# Preliminary incident assessment\nGenerated: 2026-10-28T18:20:32.199Z\nIncident type: forest_fire | Location: Not stated | Severity (system assessment): high\n\n## Summary\nA large forest fire is reported and observed burning on a hillside behind a village, with flames approaching the first houses and strong winds blowing toward the settlement at night. The exact location and scale of the fire are unknown.\n\n## 1. What was reported\n- Smoke is rising from the hills behind the village (reported).\n- Flames are visible near the first houses (reported).\n- A strong wind is blowing toward the village (reported).\n\n## 2. What was observed in the image\n- Large plume of smoke rising from the hillside (high confidence).\n- Bright, glowing flames visible along the ridge of the hillside (high confidence).\n- Dark, silhouetted vegetation on the hillside (medium confidence).\n- Metal framework structure in the foreground (low confidence).\n- Bright red light trails in the foreground (low confidence).\n- Inconsistency: The report mentions houses near flames and strong wind, which are not visible in the image.\n\n## 3. Relevant information from the knowledge base\n- Coverage: Good.\n- Evacuate immediately if authorities instruct, or shelter in a cleared house if not ordered to evacuate (FI-13).\n- Alert rescue services and remain informed if witnessing the fire (FI-14).\n- Weigh the use of N95 masks and closing vents for smoke protection (FI-16).\n\n## 4. System assessment\n- Severity is high based on flames near houses and wind blowing toward the village.\n- Main risks include fire spreading to nearby buildings and rapid escalation due to unknown size and wind speed.\n- Possibly affected elements include houses in the village, hillside vegetation, and villagers.\n- Conflicts exist between the report and image regarding the visibility of houses and wind.\n\n## 5. Missing information and uncertainties\n- Uncertainties include the discrepancy regarding house visibility, lack of wind evidence in the image, and unspecified threat to occupants.\n- Information needed: exact location, fire size, number of affected houses, wind speed, injury/trapping status, and resource status.\n\n## About this report\nThis report is a decision-support output from an AI prototype. It does not replace emergency services and is not an official emergency decision. The severity scale is a working scale of this prototype.",
+  "report": {
+   "language": "en",
+   "location": null,
+   "severity": "high",
+   "summary": "A large forest fire is reported and observed burning on a hillside behind a village, with flames approaching the first houses and strong winds blowing toward the settlement at night. The exact location and scale of the fire are unknown.",
+   "reported": [
+    {
+     "text": "Smoke is rising from the hills behind the village",
+     "source": "report"
+    },
+    {
+     "text": "Flames are visible near the first houses",
+     "source": "report"
+    },
+    {
+     "text": "A strong wind is blowing toward the village",
+     "source": "report"
+    }
+   ],
+   "image_status": "analysed",
+   "observed": [
+    {
+     "text": "Large plume of smoke rising from the hillside, illuminated by firelight.",
+     "confidence": "high",
+     "source": "image"
+    },
+    {
+     "text": "Bright, glowing flames visible along the ridge of the hillside.",
+     "confidence": "high",
+     "source": "image"
+    },
+    {
+     "text": "Dark, silhouetted vegetation on the hillside, indicating fire is consuming it.",
+     "confidence": "medium",
+     "source": "image"
+    },
+    {
+     "text": "Metal framework structure in the foreground, possibly a sign or guardrail, casting a silhouette.",
+     "confidence": "low",
+     "source": "image"
+    },
+    {
+     "text": "Bright red light trails in the foreground, likely from vehicle headlights or taillights.",
+     "confidence": "low",
+     "source": "image"
+    }
+   ],
+   "knowledge": {
+    "coverage": "good",
+    "guidance": [
+     {
+      "text": "FEMA says to evacuate and leave immediately if authorities tell you to, and to listen for emergency information and alerts; if not ordered to evacuate, take shelter in a house cleared of vegetation.",
+      "entry_id": "FI-13",
+      "chunk_id": "en/fire_kb.md::section::10",
+      "source": "knowledge_base"
+     },
+     {
+      "text": "If a person is a witness, considerations might include alerting rescue services and remaining informed.",
+      "entry_id": "FI-14",
+      "chunk_id": "fr/fire_kb.md::section::2",
+      "source": "knowledge_base"
+     },
+     {
+      "text": "For protection against smoke, responders might weigh the use of N95 masks and closing vents.",
+      "entry_id": "FI-16",
+      "chunk_id": "fr/fire_kb.md::section::4",
+      "source": "knowledge_base"
+     }
+    ],
+    "no_guidance_statement": null
+   },
+   "assessment": {
+    "basis": [
+     {
+      "text": "Flames are visible near the first houses",
+      "source": "report"
+     },
+     {
+      "text": "A strong wind is blowing toward the village",
+      "source": "report"
+     },
+     {
+      "text": "The fire is burning across a hillside at night with smoke and fire visible",
+      "source": "image"
+     }
+    ],
+    "risks": [
+     {
+      "text": "Fire spreading from the hillside to nearby buildings",
+      "source": "report"
+     },
+     {
+      "text": "Rapid escalation due to distance and size being unknown",
+      "source": "model_inference"
+     }
+    ],
+    "possibly_affected": [
+     {
+      "text": "Houses in the village (specifically 'the first houses')",
+      "source": "report"
+     },
+     {
+      "text": "Hillside vegetation",
+      "source": "image"
+     },
+     {
+      "text": "Villagers",
+      "source": "model_inference"
+     }
+    ],
+    "conflicts": [
+     "The report states 'flames are visible near the first houses', but the image analysis notes that no houses are visible in the image.",
+     "The report describes 'a strong wind', while the image analysis notes that no wind or wind direction is visible."
+    ]
+   },
+   "recommendations": [
+    {
+     "text": "Monitor official channels to see if authorities issue evacuation orders.",
+     "entry_id": "FI-13",
+     "chunk_id": "en/fire_kb.md::section::10",
+     "source": "knowledge_base"
+    },
+    {
+     "text": "If not ordered to evacuate, individuals might look at taking shelter in a house cleared of vegetation.",
+     "entry_id": "FI-13",
+     "chunk_id": "en/fire_kb.md::section::10",
+     "source": "knowledge_base"
+    },
+    {
+     "text": "If a person is a witness, considerations might include alerting rescue services and remaining informed.",
+     "entry_id": "FI-14",
+     "chunk_id": "fr/fire_kb.md::section::2",
+     "source": "knowledge_base"
+    },
+    {
+     "text": "For protection against smoke, responders might weigh the use of N95 masks and closing vents.",
+     "entry_id": "FI-16",
+     "chunk_id": "fr/fire_kb.md::section::4",
+     "source": "knowledge_base"
+    }
+   ],
+   "uncertainties": [
+    "The disaster report disagrees with the image regarding the visibility of houses near the flames; the report claims they are there, but the image does not show them.",
+    "The report mentions strong wind, but the image does not provide evidence of wind speed or direction.",
+    "No people are mentioned as being at risk in the report, but the threat to buildings implies a potential threat to occupants."
+   ],
+   "information_needed": [
+    "Exact location (coordinates or address)",
+    "Size and extent of the fire",
+    "Number of houses threatened or affected",
+    "Wind speed",
+    "Whether any people are injured or trapped",
+    "Evacuation or firefighting resources status"
+   ],
+   "disclaimer": "This report is a decision-support output from an AI prototype. It does not replace emergency services and is not an official emergency decision. The severity scale is a working scale of this prototype.",
+   "report_markdown": "# Preliminary incident assessment\nGenerated: 2026-10-28T18:20:32.199Z\nIncident type: forest_fire | Location: Not stated | Severity (system assessment): high\n\n## Summary\nA large forest fire is reported and observed burning on a hillside behind a village, with flames approaching the first houses and strong winds blowing toward the settlement at night. The exact location and scale of the fire are unknown.\n\n## 1. What was reported\n- Smoke is rising from the hills behind the village (reported).\n- Flames are visible near the first houses (reported).\n- A strong wind is blowing toward the village (reported).\n\n## 2. What was observed in the image\n- Large plume of smoke rising from the hillside (high confidence).\n- Bright, glowing flames visible along the ridge of the hillside (high confidence).\n- Dark, silhouetted vegetation on the hillside (medium confidence).\n- Metal framework structure in the foreground (low confidence).\n- Bright red light trails in the foreground (low confidence).\n- Inconsistency: The report mentions houses near flames and strong wind, which are not visible in the image.\n\n## 3. Relevant information from the knowledge base\n- Coverage: Good.\n- Evacuate immediately if authorities instruct, or shelter in a cleared house if not ordered to evacuate (FI-13).\n- Alert rescue services and remain informed if witnessing the fire (FI-14).\n- Weigh the use of N95 masks and closing vents for smoke protection (FI-16).\n\n## 4. System assessment\n- Severity is high based on flames near houses and wind blowing toward the village.\n- Main risks include fire spreading to nearby buildings and rapid escalation due to unknown size and wind speed.\n- Possibly affected elements include houses in the village, hillside vegetation, and villagers.\n- Conflicts exist between the report and image regarding the visibility of houses and wind.\n\n## 5. Missing information and uncertainties\n- Uncertainties include the discrepancy regarding house visibility, lack of wind evidence in the image, and unspecified threat to occupants.\n- Information needed: exact location, fire size, number of affected houses, wind speed, injury/trapping status, and resource status.\n\n## About this report\nThis report is a decision-support output from an AI prototype. It does not replace emergency services and is not an official emergency decision. The severity scale is a working scale of this prototype."
+  },
+  "validation": {
+   "status": "pass",
+   "violations": [],
+   "repaired": false
+  },
+  "degraded_steps": [],
+  "knowledge_coverage": "good",
+  "retrieved_entry_ids": [
+   "FI-11",
+   "FI-13",
+   "FI-21",
+   "FI-23",
+   "FI-24",
+   "FI-10",
+   "FI-16",
+   "FI-26",
+   "FI-17",
+   "FI-14"
+  ],
+  "models_used": [
+   {
+    "step": "incident",
+    "provider": "groq",
+    "model": "openai/gpt-oss-120b",
+    "seconds": 2.49,
+    "failed_attempts": []
+   },
+   {
+    "step": "vision",
+    "provider": "ollama",
+    "model": "qwen3-vl:4b-instruct",
+    "seconds": 10,
+    "failed_attempts": []
+   },
+   {
+    "step": "RAG queries",
+    "provider": "groq",
+    "model": "openai/gpt-oss-120b",
+    "seconds": 1.65,
+    "failed_attempts": []
+   },
+   {
+    "step": "knowledge",
+    "provider": "groq",
+    "model": "openai/gpt-oss-120b",
+    "seconds": 6.37,
+    "failed_attempts": []
+   },
+   {
+    "step": "risk",
+    "provider": "groq",
+    "model": "qwen/qwen3.8-27b",
+    "seconds": 3.49,
+    "failed_attempts": [
+     "groq:openai/gpt-oss-120b rate limit"
+    ]
+   },
+   {
+    "step": "report",
+    "provider": "groq",
+    "model": "qwen/qwen3.8-27b",
+    "seconds": 4.95,
+    "failed_attempts": []
+   }
+  ],
+  "prompt_versions": {
+   "incident": "v3",
+   "vision": "v1",
+   "rag_queries": "v1",
+   "knowledge": "v2",
+   "risk": "v2",
+   "report": "v4"
+  }
+ }
+}

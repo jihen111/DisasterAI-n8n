@@ -1,8 +1,55 @@
 # DisasterAI
 
-Multi-agent AI assistant for disaster assessment and response. Final project, Advanced Deep Learning (AI Automation), class 5DS1, 2026-2027.
+Multi-agent AI assistant for disaster assessment and response. Final project, Advanced Deep Learning (AI Automation), class 5DS1, Esprit, 2026-2027.
 
 DisasterAI is a decision-support prototype. It does not replace emergency services, dispatch vehicles or make life-critical decisions.
+
+A witness report (text, optional photo, English or French) goes into an **n8n** workflow. Six agents read it, look at the photo with a **local vision model**, search our own **knowledge base (RAG)**, assess the risk and write a sourced report. Automatic checks then validate the report.
+
+| Brief requirement | Where it is in this repository |
+|---|---|
+| 1. Automation platform, triggerable end to end | `n8n/workflows/disasterai.json` (78 nodes), started by one POST to the webhook |
+| 2. Prompt engineering, versioned library | `prompts/` (one file per version), `prompts/CHANGELOG.md`, `docs/PROMPT_LIBRARY.md` |
+| 3. RAG and retrieval evaluation | `rag/` (corpus, chunking, ChromaDB), `rag/eval/` (queries and results), RAG section of `docs/EVIDENCE_LOG.md` |
+| 4. Multi-agent system | Pipeline section below, `docs/N8N_WORKFLOW_PLAN.md` |
+| 5. Multimodality (images) | `docs/VISION_ARCHITECTURE.md`, `vision/test_images/` |
+| Technical report, prompt library, retrieval evaluation | `docs/` (see Documents) |
+
+## Quick start (Windows, PowerShell)
+
+Needs Docker Desktop (running), Python 3.10 or newer, Git, and a free Groq API key. For the local vision model you also need an NVIDIA GPU with 6 GB of memory and about 10 GB of free disk space.
+
+```powershell
+git clone https://github.com/jihen111/DisasterAI-n8n.git
+cd DisasterAI-n8n
+copy .env.example .env
+notepad .env                      # paste GROQ_API_KEY=... (and optionally GEMINI_API_KEY=...)
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1      # if blocked: Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+pip install torch --index-url https://download.pytorch.org/whl/cpu   # CPU build, much smaller
+pip install -r requirements.txt
+docker compose up -d              # n8n on http://localhost:5678
+python -m rag.ingest --strategy both
+```
+
+Local vision model, Ollama in Docker with the GPU (one time, about 3.3 GB):
+
+```powershell
+docker run -d --name ollama --restart unless-stopped --gpus all -p 11434:11434 -v ollama_models:/root/.ollama -e OLLAMA_KEEP_ALIVE=24h ollama/ollama
+docker exec ollama ollama pull qwen3-vl:4b-instruct
+python scripts/llm_ping.py --model ollama:qwen3-vl:4b-instruct --image --json   # first call about 70 s (model loading)
+```
+
+Then:
+
+1. Start the service and leave the window open: `uvicorn rag.service:app --host 0.0.0.0 --port 8010`. Restart it after any change to `.env`.
+2. Open http://localhost:5678 and create the owner account.
+3. Import both workflows: **Create workflow → ⋯ → Import from File**, choose `n8n/workflows/disasterai.json`, then `disasterai_error.json`. Then **Publish** "DisasterAI pipeline".
+4. In a second window (activate the venv first), run `streamlit run ui/app.py`. Pick `fire_01`, upload `vision/test_images/fire_01.jpg` and press **Run**.
+
+In PowerShell, call the webhook with `curl.exe`, not `curl` (which is an alias for `Invoke-WebRequest`). Free-tier rate limits are normal: the chain then falls back to the next model, and the console shows which model answered each step.
+
+Verified on 2026-10-28 on a fresh Windows 11 machine (RTX 4050, 6 GB), following the steps above. `fire_01` with its image ran with 6 model calls in 29 s of model time: vision took 10 s on `qwen3-vl:4b-instruct`, the risk step fell back after a Groq rate limit, there were no degraded steps and validation passed. Raw file: `eval/results/ui_runs/20261028-192102-524_fire_01.json`.
 
 ## Status (2026-10-18)
 
@@ -133,4 +180,17 @@ Every number in the report and slides must come from a run we logged. Results fr
 
 ## Team
 
-Four members. Roles: architecture and coordination, RAG, multi-agent system, prompt engineering, multimodality, n8n and integration. Everyone must be able to explain every part of the system.
+| Member | Main role |
+|---|---|
+| _Name_ | Architecture and coordination |
+| _Name_ | RAG (corpus, chunking, retrieval evaluation) |
+| _Name_ | Multi-agent system and n8n integration |
+| _Name_ | Prompt engineering |
+| Jihen Troudi | _role_ |
+| _Name_ | Multimodality (vision) |
+
+Everyone must be able to explain every part of the system.
+
+## Credits
+
+Originally developed in [aminbaccari/DisasterDL](https://github.com/aminbaccari/DisasterDL) (branch `n8n-workflow`). The commit history is kept here. Test images are CC BY with attribution in `vision/test_images/SOURCES.md`, and corpus sources are listed in `rag/corpus/SOURCES.md`.
