@@ -35,6 +35,8 @@ def status_banner(body):
     if status == "degraded":
         steps = ", ".join(dict.fromkeys(d.get("step", "?") for d in degraded)) or "one step"
         return "warning", "Report produced, with degraded steps", f"Steps with a problem: {steps}. Details are in the Pipeline tab."
+    if status == "needs_more_information":
+        return "info", "More information needed", "The report is too vague to classify. Nothing was guessed: the missing information is listed below."
     if not (body or {}).get("report"):
         return "error", "No report was produced", "The report agent failed even after its retry."
     return "info", f"Status: {status}", ""
